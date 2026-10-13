@@ -57,7 +57,7 @@ class SchemaValidator(ABC):
 class CoercingValidator(SchemaValidator):
     def validate(self, record: dict) -> ValidationResult:
         if not isinstance(record, dict):
-            error_msg = f'Record is not a dict, got {type(record).name}: {record!r}'
+            error_msg = f'Record is not a dict, got {type(record).__name__}: {record!r}'
             return ValidationResult(False, [error_msg])
 
         for field in self.schema.schema_fields:
