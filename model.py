@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 class SchemaField:
-    def __init__(self, name: int, expected_type: type, required: bool):
+    def __init__(self, name: str, expected_type: type, required: bool):
         """Definition of a single field in a schema.
 
         Args:
@@ -56,12 +56,16 @@ class SchemaValidator(ABC):
 
 class CoercingValidator(SchemaValidator):
     def validate(self, record: dict) -> ValidationResult:
+        if not isinstance(record, dict):
+            error_msg = f'Record is not a dict, got {type(record).name}: {record!r}'
+            return ValidationResult(False, [error_msg])
+
         for field in self.schema.schema_fields:
             if field.name in record:
                 if field.expected_type != type(record[field.name]):
                     try:
-                        converted_val = field.expected_type(record[field.name])
-                    except:
+                        field.expected_type(record[field.name])
+                    except (ValueError, TypeError):
                         error_msg = f'Value type does not match for key: {field.name}, type {type(record[field.name])}, expected: {field.expected_type}'
                         return ValidationResult(False, [error_msg])
             else :
@@ -69,8 +73,3 @@ class CoercingValidator(SchemaValidator):
                     error_msg = f'Record keys does not match, no {field.name} in {record}'
                     return ValidationResult(False, [error_msg])
         return ValidationResult(True, [])
-            
-
-
-        
-                
