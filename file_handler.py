@@ -18,3 +18,4 @@ def load_records(path_to_file: str):
     
     else :
         raise ValueError("file extension is not supported")
+
