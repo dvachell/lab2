@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 class SchemaField:
-    def __init__(self, name, expected_type: type, required: bool):
+    def __init__(self, name: int, expected_type: type, required: bool):
         """Definition of a single field in a schema.
 
         Args:
