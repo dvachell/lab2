@@ -12,3 +12,7 @@ wheels/
 # Generated data
 data/
 reports/
+bledy_wg_pola.png
+
+# Test cache
+.pytest_cache/
