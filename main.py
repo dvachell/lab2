@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-import test_data
+import demo_data
 import file_handler
 from model import Schema, SchemaField, CoercingValidator
 
@@ -55,14 +55,14 @@ def process_file(file: Path, validator: CoercingValidator):
 
 
 if __name__ == "__main__":
-    test_data.make_files()
-    test_data.make_broken_files()
+    demo_data.make_files()
+    demo_data.make_broken_files()
     REPORTS_DIR.mkdir(exist_ok=True)
 
     validator = CoercingValidator(schema)
 
-    files = sorted(test_data.DATA_DIR.iterdir())
-    files.append(test_data.DATA_DIR / "nie_ma.json")
+    files = sorted(demo_data.DATA_DIR.iterdir())
+    files.append(demo_data.DATA_DIR / "nie_ma.json")
     for file in files:
         process_file(file, validator)
         print()
